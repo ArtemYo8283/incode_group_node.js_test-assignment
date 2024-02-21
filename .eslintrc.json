@@ -2,7 +2,7 @@
   "env": {
     "node": true
   },
-  "extends": ["airbnb-base", "plugin:security/recommended", "plugin:prettier/recommended"],
+  "extends": ["airbnb-base", "plugin:prettier/recommended"],
   "plugins": ["security", "prettier"],
   "parserOptions": {
     "ecmaVersion": 2018
@@ -14,7 +14,7 @@
     "no-useless-escape": "off",
     "no-unused-vars": "off",
     "class-methods-use-this": "off",
-    "security/detect-object-injection": "off",
+    "prettier/prettier": "error",
     "import/extensions": [0, {  "js": "always"  }]
   }
 }
