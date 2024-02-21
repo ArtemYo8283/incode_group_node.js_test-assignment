@@ -7,6 +7,7 @@ import bodyParser from "body-parser";
 import "dotenv/config";
 import cors from "cors";
 
+import { connectToDB, syncModels } from "./database/db.js";
 import ApiLimiter from "./middlewares/rateLimiter.js";
 import AppRouter from "./routes/index.js";
 import { ErrorHandler } from "./middlewares/errorHandler.js";
@@ -17,6 +18,8 @@ const corsOptions = {
     optionSuccessStatus: 200,
 };
 
+connectToDB();
+syncModels();
 const app = express();
 const router = new AppRouter(app);
 

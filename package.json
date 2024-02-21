@@ -13,7 +13,9 @@
         "lint:fix": "eslint . --fix",
         "prettier": "prettier --check **/*.js",
         "prettier:fix": "prettier --write **/*.js",
-        "prepare": "npx husky-init"
+        "db:setup": "mysql -h localhost -u root -p < db.sql",
+        "db:migrate": "npx sequelize-cli db:migrate",
+        "prepare": "npx husky-init" 
     },
     "keywords": [
         "node",
@@ -53,16 +55,18 @@
         "express-rate-limit": "^7.1.5",
         "express-validator": "^7.0.1",
         "helmet": "^7.1.0",
-        "husky": "^9.0.11",
+        "js-date-to-sql-datetime": "^1.2.7",
         "jsonwebtoken": "^9.0.2",
         "lint-staged": "^15.2.2",
         "mocha": "^10.3.0",
+        "mysql2": "^3.9.1",
         "nodemon": "^3.0.3",
         "passport": "^0.7.0",
         "passport-jwt": "^4.0.1",
         "path": "^0.12.7",
         "pm2": "^5.3.1",
         "prettier": "^3.2.5",
+        "sequelize": "^6.37.1",
         "supertest": "^6.3.4",
         "swagger-jsdoc": "^6.2.8",
         "swagger-ui-express": "^5.0.0",
@@ -70,6 +74,8 @@
         "xss-clean": "^0.1.4"
     },
     "devDependencies": {
-        "husky": "^8.0.0"
+        "babel-register": "^6.26.0",
+        "husky": "^8.0.0",
+        "sequelize-cli": "^6.6.2"
     }
 }

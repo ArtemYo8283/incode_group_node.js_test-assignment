@@ -1,5 +1,6 @@
 import app from "./app.js";
 import logger from "./config/logger.js";
+import { disconnectFromDB } from "./database/db.js";
 
 const port = app.get("port");
 
@@ -15,6 +16,7 @@ process.on("SIGTERM", () => {
         level: "info",
         message: "SIGTERM received",
     });
+    disconnectFromDB();
     if (server) {
         server.close();
     }

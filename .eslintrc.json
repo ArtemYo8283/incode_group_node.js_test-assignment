@@ -13,8 +13,10 @@
     "consistent-return": "off",
     "no-useless-escape": "off",
     "no-unused-vars": "off",
+    "global-require": "off",
     "class-methods-use-this": "off",
     "prettier/prettier": "error",
+    "import/no-dynamic-require": "off",
     "import/extensions": [0, {  "js": "always"  }]
   }
 }
