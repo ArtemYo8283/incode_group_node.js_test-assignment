@@ -15,7 +15,7 @@
         "prettier:fix": "prettier --write **/*.js",
         "db:setup": "mysql -h localhost -u root -p < db.sql",
         "db:migrate": "npx sequelize-cli db:migrate",
-        "prepare": "npx husky-init" 
+        "prepare": "npx husky-init"
     },
     "keywords": [
         "node",
@@ -59,6 +59,7 @@
         "jsonwebtoken": "^9.0.2",
         "lint-staged": "^15.2.2",
         "mocha": "^10.3.0",
+        "morgan": "^1.10.0",
         "mysql2": "^3.9.1",
         "nodemon": "^3.0.3",
         "passport": "^0.7.0",
