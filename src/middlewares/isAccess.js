@@ -13,7 +13,8 @@ import { UserRolesConst } from "./constants.js";
  * @returns {void}
  */
 export const isAdmin = (req, res, next) => {
-    const userData = jwt.verify(req.params.token, process.env.JWT_SECRET);
+    const { token } = req.headers;
+    const userData = jwt.verify(token, process.env.JWT_SECRET);
     if (userData.role !== UserRolesConst[0]) {
         return response(403, { message: "access denied" }, res);
     }
@@ -28,7 +29,7 @@ export const isAdmin = (req, res, next) => {
  * @returns {void}
  */
 export const isAutorised = async (req, res, next) => {
-    const { token } = req.params;
+    const { token } = req.headers;
     try {
         jwt.verify(token, process.env.JWT_SECRET);
         next();
