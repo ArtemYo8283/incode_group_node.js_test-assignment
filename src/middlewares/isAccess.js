@@ -12,10 +12,10 @@ import { UserRolesConst } from "./constants.js";
  * @param {import("express").NextFunction} next - The next middleware function.
  * @returns {void}
  */
-export const isAdmin = (req, res, next) => {
+export const isAdminOrBoss = (req, res, next) => {
     const { token } = req.headers;
     const userData = jwt.verify(token, process.env.JWT_SECRET);
-    if (userData.role !== UserRolesConst[0]) {
+    if (userData.roleId === 3) {
         return response(403, { message: "access denied" }, res);
     }
     next();

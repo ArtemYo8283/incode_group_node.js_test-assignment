@@ -6,9 +6,19 @@ import validateRequestSchema from "../../middlewares/validateRequestSchema.js";
 import tryCatch from "../../middlewares/tryCatch.js";
 import { userController } from "../../controllers/index.js";
 import { UserService } from "../../services/index.js";
-import { isAutorised } from "../../middlewares/isAccess.js";
-import { ifUserExist, ifUserNotExist } from "../../scripts/users/userChecking.script.js";
-import { checkUserOnSelectByLogin, checkUserOnSelectById } from "../../validations/user.validation.js";
+import { isAutorised, isAdminOrBoss } from "../../middlewares/isAccess.js";
+import {
+    ifUserExist,
+    ifUserNotExist,
+    ifUserBossIdNotExist,
+    ifUserIdNotExist,
+    ifUserNested,
+} from "../../scripts/users/userChecking.script.js";
+import {
+    checkUserOnSelectByLogin,
+    checkUserOnSelectById,
+    checkUserOnChangeBoss,
+} from "../../validations/user.validation.js";
 
 const userRouter = Router();
 
@@ -33,6 +43,18 @@ userRouter.get(
     checkUserOnSelectById,
     validateRequestSchema,
     tryCatch(userController.selectById.bind(userController)),
+);
+
+userRouter.patch(
+    "/changeBoss",
+    isAutorised,
+    isAdminOrBoss,
+    checkUserOnChangeBoss,
+    validateRequestSchema,
+    ifUserIdNotExist(UserService),
+    ifUserBossIdNotExist(UserService),
+    ifUserNested(UserService),
+    tryCatch(userController.changeBoss.bind(userController)),
 );
 
 export default userRouter;

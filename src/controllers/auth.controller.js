@@ -31,8 +31,10 @@ export class AuthController {
             login: body.login,
             password: encryptedPass,
             roleId: body.roleId,
-            // bossId: (body.bossId === 0 ? NULL : body.bossId),
         };
+        if (body.roleId !== 1) {
+            userData.bossId = body.bossId;
+        }
         const result = await this.service.create(userData);
         return { code: result.code, values: result.values };
     }
