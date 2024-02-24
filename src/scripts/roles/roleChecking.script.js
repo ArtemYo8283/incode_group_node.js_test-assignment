@@ -8,7 +8,6 @@ import isExist from "../../middlewares/isExist.js";
  */
 export const ifRoleIdNotExist = (Service) => async (req, res, next) => {
     const isId = await isExist(Service, "id", req.body.id);
-
     if (!isId) {
         return response(404, { message: "Role with this id not exist" }, res);
     }

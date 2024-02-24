@@ -17,7 +17,7 @@ export default class RoleService {
                 message: "Error selecting role",
                 error: new Error(error),
             });
-            return { code: 400, values: `Error selecting role: ${error}` };
+            return { code: 500, values: `Error selecting role: ${error}` };
         }
     }
 
@@ -36,7 +36,7 @@ export default class RoleService {
                 message: "Error selecting role",
                 error: new Error(error),
             });
-            return { code: 400, values: `Error selecting role: ${error}` };
+            return { code: 500, values: `Error selecting role: ${error}` };
         }
     }
 

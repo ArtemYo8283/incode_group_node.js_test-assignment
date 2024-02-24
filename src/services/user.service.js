@@ -22,7 +22,7 @@ export default class UserService {
                 message: "Error selecting user",
                 error: new Error(error),
             });
-            return { code: 400, values: `Error selecting user: ${error}` };
+            return { code: 500, values: `Error selecting user: ${error}` };
         }
     }
 
@@ -59,7 +59,7 @@ export default class UserService {
                 message: "Error selecting users",
                 error: new Error(error),
             });
-            return { code: 400, values: `Error selecting users: ${error}` };
+            return { code: 500, values: `Error selecting users: ${error}` };
         }
     }
 
@@ -81,7 +81,33 @@ export default class UserService {
                 message: "Error selecting user",
                 error: new Error(error),
             });
-            return { code: 400, values: `Error selecting user: ${error}` };
+            return { code: 500, values: `Error selecting user: ${error}` };
+        }
+    }
+
+    /**
+     * Retrieves a user by login
+     * @param {string} login - The user's login
+     * @returns {Promise<{ code: number, values: any }>} Promise containing code and values
+     */
+    async selectByLogin(login) {
+        try {
+            const user = await User.findOne({
+                where: {
+                    login,
+                },
+            });
+            if (user) {
+                return { code: 200, values: user };
+            }
+            return { code: 404, values: "user_not_found" };
+        } catch (error) {
+            logger.log({
+                level: "error",
+                message: "Error selecting user",
+                error: new Error(error),
+            });
+            return { code: 500, values: `Error selecting user: ${error}` };
         }
     }
 
@@ -105,7 +131,7 @@ export default class UserService {
                 message: `Error creating user: ${error}`,
                 error: new Error(error),
             });
-            return { code: 400, values: `Error creating user: ${error}` };
+            return { code: 500, values: `Error creating user: ${error}` };
         }
     }
 
@@ -129,7 +155,7 @@ export default class UserService {
                 message: `Error creating user: ${error}`,
                 error: new Error(error),
             });
-            return { code: 400, values: `Error creating user: ${error}` };
+            return { code: 500, values: `Error creating user: ${error}` };
         }
     }
 
