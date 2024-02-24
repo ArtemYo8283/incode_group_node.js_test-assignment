@@ -5,8 +5,10 @@ import "dotenv/config";
 import validateRequestSchema from "../../middlewares/validateRequestSchema.js";
 import tryCatch from "../../middlewares/tryCatch.js";
 import { roleController } from "../../controllers/index.js";
+import { RoleService } from "../../services/index.js";
 import { isAutorised } from "../../middlewares/isAccess.js";
 import { checkRoleOnSelectById } from "../../validations/role.validation.js";
+import { ifRoleIdNotExist } from "../../scripts/roles/roleChecking.script.js";
 
 const roleRouter = Router();
 
@@ -20,6 +22,7 @@ roleRouter.get(
     isAutorised,
     checkRoleOnSelectById,
     validateRequestSchema,
+    ifRoleIdNotExist(RoleService),
     tryCatch(roleController.selectById.bind(roleController)),
 );
 

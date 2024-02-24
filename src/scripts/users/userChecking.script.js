@@ -35,6 +35,10 @@ export const ifUserNotExist = (Service) => async (req, res, next) => {
  * @returns {Function} Middleware function.
  */
 export const ifUserBossIdNotExist = (Service) => async (req, res, next) => {
+    if (parseInt(req.body.bossId, 10) === 0) {
+        next();
+        return;
+    }
     const isId = await isExist(Service, "id", req.body.bossId);
     if (!isId) {
         return response(404, { message: "User boss with this id not exist" }, res);

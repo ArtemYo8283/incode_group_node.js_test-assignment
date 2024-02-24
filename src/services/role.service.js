@@ -48,10 +48,10 @@ export default class RoleService {
      */
     async isExist(field, value) {
         try {
+            const whereClause = {};
+            whereClause[field] = value;
             const role = await Role.findOne({
-                where: {
-                    login: value,
-                },
+                where: whereClause,
             });
             if (role) {
                 return role;

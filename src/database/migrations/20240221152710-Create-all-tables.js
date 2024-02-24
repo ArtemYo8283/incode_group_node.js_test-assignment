@@ -65,6 +65,15 @@ module.exports = {
                 allowNull: true,
             },
         });
+        await queryInterface.bulkInsert(
+            "roles",
+            [
+                { title: "ADMIN", createdAt: new Date(), updatedAt: new Date() },
+                { title: "BOSS", createdAt: new Date(), updatedAt: new Date() },
+                { title: "USER", createdAt: new Date(), updatedAt: new Date() },
+            ],
+            {},
+        );
     },
 
     async down(queryInterface, Sequelize) {

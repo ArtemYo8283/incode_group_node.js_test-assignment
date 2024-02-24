@@ -32,7 +32,10 @@ export class AuthController {
             password: encryptedPass,
             roleId: body.roleId,
         };
-        if (body.roleId !== 1) {
+        if (parseInt(body.roleId, 10) !== 1) {
+            if (parseInt(body.bossId, 10) === 0) {
+                return { code: 400, values: "Boss id can't be 0 if you aren't Admin" };
+            }
             userData.bossId = body.bossId;
         }
         const result = await this.service.create(userData);

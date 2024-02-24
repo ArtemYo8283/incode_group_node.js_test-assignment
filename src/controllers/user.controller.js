@@ -1,6 +1,5 @@
 import jwt from "jsonwebtoken";
 
-import logger from "../config/logger.js";
 import { UserService } from "../services/index.js";
 
 /**
@@ -33,18 +32,6 @@ export class UserController {
     }
 
     /**
-     * Retrieves a user by login.
-     * @param {import("express").Request} req The Express request object.
-     * @param {import("express").Response} res The Express response object.
-     * @returns {Promise<{code: number, values: any}>} The result of the operation.
-     */
-    async selectByLogin(req, res) {
-        const { body } = req;
-        const result = await this.service.selectByLogin(body.login);
-        return { code: result.code, values: result.values };
-    }
-
-    /**
      * Retrieves a user by id.
      * @param {import("express").Request} req The Express request object.
      * @param {import("express").Response} res The Express response object.
@@ -52,7 +39,7 @@ export class UserController {
      */
     async selectById(req, res) {
         const { body } = req;
-        const result = await this.service.selectById(body.id);
+        const result = await this.service.selectById(body.userId);
         return { code: result.code, values: result.values };
     }
 
@@ -64,6 +51,9 @@ export class UserController {
      */
     async changeBoss(req, res) {
         const { body } = req;
+        if (parseInt(body.bossId, 10) === 0) {
+            return { code: 400, values: "Boss id can't be 0" };
+        }
         const data = {
             userId: body.userId,
             bossId: body.bossId,
