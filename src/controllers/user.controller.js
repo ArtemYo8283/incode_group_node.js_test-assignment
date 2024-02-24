@@ -1,4 +1,5 @@
-import logger from "../config/logger.js";
+import jwt from "jsonwebtoken";
+
 import { UserService } from "../services/index.js";
 
 /**
@@ -10,6 +11,55 @@ export class UserController {
      */
     constructor() {
         this.service = new UserService();
+    }
+
+    /**
+     * Retrieves all users.
+     * @param {import("express").Request} req The Express request object.
+     * @param {import("express").Response} res The Express response object.
+     * @returns {Promise<{code: number, values: any}>} The result of the operation.
+     */
+    async selectAll(req, res) {
+        const { token } = req.headers;
+        const userData = jwt.verify(token, process.env.JWT_SECRET);
+        let result;
+        if (userData.roleId === 3) {
+            result = await this.service.selectById(userData.userId);
+        } else {
+            result = await this.service.selectAllNestedById(userData.userId);
+        }
+        return { code: result.code, values: result.values };
+    }
+
+    /**
+     * Retrieves a user by id.
+     * @param {import("express").Request} req The Express request object.
+     * @param {import("express").Response} res The Express response object.
+     * @returns {Promise<{code: number, values: any}>} The result of the operation.
+     */
+    async selectById(req, res) {
+        const { body } = req;
+        const result = await this.service.selectById(body.userId);
+        return { code: result.code, values: result.values };
+    }
+
+    /**
+     * Change user`s boss.
+     * @param {import("express").Request} req The Express request object.
+     * @param {import("express").Response} res The Express response object.
+     * @returns {Promise<{code: number, values: any}>} The result of the operation.
+     */
+    async changeBoss(req, res) {
+        const { body } = req;
+        if (parseInt(body.bossId, 10) === 0) {
+            return { code: 400, values: "Boss id can't be 0" };
+        }
+        const data = {
+            userId: body.userId,
+            bossId: body.bossId,
+        };
+        const result = await this.service.changeBoss(data);
+        return { code: result.code, values: result.values };
     }
 }
 
