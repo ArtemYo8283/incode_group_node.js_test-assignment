@@ -34,3 +34,94 @@ export default roleRouter;
  *   name: Roles
  *   description: Role management and retrieval
  */
+
+/**
+ * @swagger
+ * /roles/selectAll:
+ *   get:
+ *     summary: Select all roles
+ *     description: Select all roles
+ *     tags: [Roles]
+ *     parameters:
+ *       - in: header
+ *         name: token
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: JWT token for authentication
+ *     responses:
+ *       '200':
+ *         description: Successful response
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: integer
+ *                   title:
+ *                     type: string
+ *                   createdAt:
+ *                     type: string
+ *                     format: date-time
+ *                   updatedAt:
+ *                     type: string
+ *                     format: date-time
+ *       '401':
+ *         description: Unauthorized user
+ *       '500':
+ *         description: Error selecting role
+ */
+
+/**
+ * @swagger
+ * /roles/selectById:
+ *   get:
+ *     summary: Select role by id
+ *     description: Select role by id
+ *     tags: [Roles]
+ *     parameters:
+ *       - in: header
+ *         name: token
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: JWT token for authentication
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               id:
+ *                 type: integer
+ *             required:
+ *               - id
+ *     responses:
+ *       '200':
+ *         description: Role selected
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: integer
+ *                 title:
+ *                   type: string
+ *                 createdAt:
+ *                   type: string
+ *                   format: date-time
+ *                 updatedAt:
+ *                   type: string
+ *                   format: date-time
+ *       '401':
+ *         description: Unauthorized user
+ *       '404':
+ *         description: Role with this id does not exist
+ *       '500':
+ *         description: Error selecting roles
+ */
