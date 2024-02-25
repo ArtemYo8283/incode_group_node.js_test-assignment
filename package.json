@@ -9,13 +9,15 @@
         "start": "pm2 start ecosystem.config.json --no-daemon",
         "dev": "cross-env NODE_ENV=development nodemon src/index.js",
         "test": "cross-env NODE_ENV=test mocha --require @babel/register --exit",
+        "pretest": "cross-env NODE_ENV=test npm run db:reset",
         "lint": "eslint .",
         "lint:fix": "eslint . --fix",
         "prettier": "prettier --check **/*.js",
         "prettier:fix": "prettier --write **/*.js",
-        "db:setup": "mysql -h localhost -u root -p < db.sql",
+        "db:setup": "npx sequelize-cli db:create",
         "db:migrate": "npx sequelize-cli db:migrate",
-        "prepare": "npx husky-init"
+        "db:reset": "npx sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate",
+        "prepare": "npx husky-init && husky install"
     },
     "keywords": [
         "node",
@@ -38,6 +40,8 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "@babel/register": "^7.23.7",
+        "babel-register": "^6.26.0",
         "bcryptjs": "^2.4.3",
         "body-parser": "^1.20.2",
         "chai": "^5.1.0",
@@ -71,10 +75,12 @@
         "supertest": "^6.3.4",
         "swagger-jsdoc": "^6.2.8",
         "swagger-ui-express": "^5.0.0",
+        "url": "^0.11.3",
         "winston": "^3.11.0",
         "xss-clean": "^0.1.4"
     },
     "devDependencies": {
+        "@babel/register": "^7.23.7",
         "babel-register": "^6.26.0",
         "husky": "^8.0.0",
         "sequelize-cli": "^6.6.2"
