@@ -1,12 +1,31 @@
 import Sequelize from "sequelize";
 import "dotenv/config";
+import { fileURLToPath } from "url";
+import path from "path";
+import fs from "fs";
 
 import logger from "../config/logger.js";
 
-export const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD, {
-    host: process.env.DB_HOST,
-    dialect: "mysql",
-});
+let sequelize;
+
+if (process.env.NODE_ENV === "test") {
+    const __filename = fileURLToPath(import.meta.url);
+    const __dirname = path.dirname(__filename);
+    const jsonData = fs.readFileSync(`${__dirname}/config/config.json`, "utf8");
+    const data = JSON.parse(jsonData);
+    sequelize = new Sequelize(data["test"].database, data["test"].username, data["test"].password, {
+        host: data["test"].host,
+        dialect: "mysql",
+        logging: false,
+    });
+} else {
+    sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD, {
+        host: process.env.DB_HOST,
+        dialect: "mysql",
+    });
+}
+
+export { sequelize };
 
 export async function connectToDB() {
     try {

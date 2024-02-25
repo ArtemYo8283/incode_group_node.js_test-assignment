@@ -112,7 +112,7 @@ export default userRouter;
  *         schema:
  *           type: object
  *           properties:
- *             id:
+ *             userId:
  *               type: integer
  *               description: User ID
  *     responses:

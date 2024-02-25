@@ -1,6 +1,8 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
     async up(queryInterface, Sequelize) {
+        await queryInterface.dropTable("users");
+        await queryInterface.dropTable("roles");
         await queryInterface.createTable("roles", {
             id: {
                 primaryKey: true,
@@ -65,7 +67,6 @@ module.exports = {
                 allowNull: true,
             },
         });
-        await queryInterface.bulkDelete("roles", null, {});
         await queryInterface.bulkInsert(
             "roles",
             [

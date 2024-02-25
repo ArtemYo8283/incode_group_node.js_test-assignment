@@ -6,8 +6,9 @@ import validateRequestSchema from "../../middlewares/validateRequestSchema.js";
 import { registerValidateChainMethod, loginValidateChainMethod } from "../../validations/auth.validation.js";
 import tryCatch from "../../middlewares/tryCatch.js";
 import { authController } from "../../controllers/index.js";
-import { UserService } from "../../services/index.js";
+import { UserService, RoleService } from "../../services/index.js";
 import { ifUserExist, ifUserNotExist, ifUserBossIdNotExist } from "../../scripts/users/userChecking.script.js";
+import { ifRoleIdAuthNotExist } from "../../scripts/roles/roleChecking.script.js";
 
 const authRouter = Router();
 
@@ -21,6 +22,7 @@ authRouter.post(
     validateRequestSchema,
     ifUserExist(UserService),
     ifUserBossIdNotExist(UserService),
+    ifRoleIdAuthNotExist(RoleService),
     tryCatch(authController.register.bind(authController)),
 );
 
